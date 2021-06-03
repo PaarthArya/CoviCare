@@ -1,15 +1,49 @@
-<MyGrid>
+#:kivy 2.0
+
+<MainWindow>:
+    name: "main"
+
     GridLayout:
-        cols:1
-        rows:2
+        cols: 1
         size: root.width, root.height
         Label:
-            text:"Welcome to CoviCare"
-
+            text: "Welcome to CoviCare"
 
         GridLayout:
             cols: 2
             Button:
-                text:"I am a donor"
+                text: "I am a donor"
+                on_release:
+                    root.manager.current = "donormenu"
+                    root.manager.transition.direction = "left"
             Button:
                 text: "I am a donee"
+
+<DonorMenu>:
+    name: "donormenu"
+
+    GridLayout:
+        cols: 1
+        size: root.width, root.height
+        
+        GridLayout:
+            cols: 2
+
+            Label:
+                text: "City: "
+            TextInput:
+                id: donorcity
+                multiline: False
+        
+        GridLayout:
+            cols: 4
+
+            Button:
+                text: "Medicine"
+            Button:
+                text: "Bed"
+            Button:
+                text: "Medical Equipment"
+            Button:
+                text: "Blood"
+        
