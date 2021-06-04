@@ -11,23 +11,19 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 import mysql.connector
 
 
-# open database connection
+# open database connection and cursor
 conn = mysql.connector.connect(host="localhost", user="root", password="Covicare123", database='covicare')
-
-# prepare a cursor object using cursor() method
 mycur = conn.cursor()
 
 
 # global variables
 city = ""
 
-#--------------------------SUPPLY SCREENS----------------------------------------
-
-def popupS():
-    pop = Popup(title='Success', content=Label(text='Your entry has been recorded'), size_hint=(None, None), size=(300, 300))
-    pop.open()
 
 # setting the screens
+
+#--------------------------------------SUPPLY SCREENS--------------------------------------------
+
 class SupplyMenu(Screen):
     supplycity = ObjectProperty(None)
 
@@ -68,25 +64,28 @@ class SupplyMedicine(Screen):
         self.medstock.text = ""
         self.medprice.text = ""
         self.medcontact.text = ""
+
+#-------------------------------------ACCESS SCREENS--------------------------------------------
+
 class AccessMenu(Screen):
     pass
 
+
 class Navigation(Screen):
     pass
-
-
 
 
 class MainWindow(Screen):
     pass
 
 
-# DEFINE ALL GLOBAL FUNCTIONS
+# global functions
+def popupS():
+    pop = Popup(title='Success', content=Label(text='Your entry has been recorded'), size_hint=(None, None), size=(300, 300))
+    pop.open()
 
 
-
-# ---------------------------
-
+# main app build
 class CoviCare(App):
     def build(self):
         # setting the screen manager 
@@ -97,13 +96,11 @@ class CoviCare(App):
         sm.add_widget(SupplyMedicine(name="supplymedicine"))
         sm.add_widget(Navigation(name="navigation"))
         sm.add_widget(AccessMenu(name="accessmenu"))
+        # returning the screen manager which provides the app
         return sm
 
-    def supplyCity(self): 
-        x = self.root.ids.supplycity.text
-        print(x)
 
-
+# main program
 if __name__ == "__main__":
     CoviCare().run()
     conn.close

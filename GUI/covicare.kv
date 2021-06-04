@@ -23,6 +23,7 @@
                     root.manager.current = "supplymenu"
                     root.manager.transition.direction = "left"
 
+
 <Navigation>:
     name: "navigation"
     GridLayout:
@@ -47,9 +48,6 @@
                 on_release: 
                     root.manager.current = "accessmenu"
                     root.manager.transition.direction= "right"
-
-
-
 
 
 <SupplyMenu>:
@@ -93,7 +91,6 @@
             on_release:
                 root.manager.current = "main"
                 root.manager.transition.direction= "right"
-
 
 
 <SupplyMedicine>:
@@ -168,10 +165,8 @@
                     root.manager.transition.direction= "right"
 
 
-
-
-
 #---------------------------------------------------------ACCESS---------------------------------------------
+
 
 <AccessMenu>:
     name: "accessmenu"
