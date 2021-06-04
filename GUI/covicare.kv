@@ -12,15 +12,20 @@
         GridLayout:
             cols: 2
             Button:
-                text: "I am a donor"
+                text: "Access Leads"
                 on_release:
-                    root.manager.current = "donormenu"
+                    root.manager.current = "accessmenu"
                     root.manager.transition.direction = "left"
-            Button:
-                text: "I am a donee"
 
-<DonorMenu>:
-    name: "donormenu"
+            Button:
+                text: "Supply Leads"
+                on_release:
+                    root.manager.current = "supplymenu"
+                    root.manager.transition.direction = "left"
+
+
+<SupplyMenu>:
+    name: "supplymenu"
 
     GridLayout:
         cols: 1
@@ -32,7 +37,7 @@
             Label:
                 text: "City: "
             TextInput:
-                id: donorcity
+                id: supplycity
                 multiline: False
         
         GridLayout:
@@ -40,10 +45,62 @@
 
             Button:
                 text: "Medicine"
+                on_release: 
+                    root.manager.current = "supplymedicine"
+                    root.manager.transition.direction= "left"
+
             Button:
                 text: "Bed"
             Button:
                 text: "Medical Equipment"
             Button:
                 text: "Blood"
-        
+
+<SupplyMedicine>:
+    name: "supplymedicine"
+    
+    GridLayout:
+        rows:2
+
+        GridLayout:
+            cols:2
+            rows:6
+
+            Label:
+                text: "Medicine ID: "
+            TextInput:
+                id: medid
+                multiline: False
+
+            Label:
+                text: "Medicine Name: "
+            TextInput:
+                id: medname
+                multiline: False
+
+            Label:
+                text: "Address: "
+            TextInput:
+                id: medaddress
+                multiline: True
+
+            Label:
+                text: "Stock: "
+            TextInput:
+                id: medstock
+                multiline: False
+
+            Label:
+                text: "Price: "
+            TextInput:
+                id: medprice
+                multiline: False
+
+            Label:
+                text: "Contact: "
+            TextInput:
+                id: medcontact
+                multiline: False
+        Button:
+            #reset all values to empty (IMP)
+            text: "Submit Details"
