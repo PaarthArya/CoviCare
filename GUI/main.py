@@ -3,6 +3,7 @@ from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.label import Label
 from kivy.properties import ObjectProperty
+from kivy.uix.popup import Popup
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
@@ -20,6 +21,11 @@ mycur = conn.cursor()
 # global variables
 city = ""
 
+#--------------------------SUPPLY SCREENS----------------------------------------
+
+def popupS():
+    pop = Popup(title='Success', content=Label(text='Your entry has been recorded'), size_hint=(None, None), size=(300, 300))
+    pop.open()
 
 # setting the screens
 class SupplyMenu(Screen):
@@ -51,9 +57,10 @@ class SupplyMedicine(Screen):
 
         sql = "INSERT INTO MEDICINE VALUES(%s, %s, %s, %s, %s, %s, %s);"
         val = (id, name, city, address, stock, price, contact)
-        mycur.execute(sql, val)
-        conn.commit()
-     
+        # mycur.execute(sql, val)
+        # conn.commit()
+        popupS()
+
     def resetmedicine(self):
         self.medid.text = ""
         self.medname.text = ""
@@ -61,6 +68,13 @@ class SupplyMedicine(Screen):
         self.medstock.text = ""
         self.medprice.text = ""
         self.medcontact.text = ""
+class AccessMenu(Screen):
+    pass
+
+class Navigation(Screen):
+    pass
+
+
 
 
 class MainWindow(Screen):
@@ -81,6 +95,8 @@ class CoviCare(App):
         sm.add_widget(MainWindow(name="main"))
         sm.add_widget(SupplyMenu(name="supplymenu"))
         sm.add_widget(SupplyMedicine(name="supplymedicine"))
+        sm.add_widget(Navigation(name="navigation"))
+        sm.add_widget(AccessMenu(name="accessmenu"))
         return sm
 
     def supplyCity(self): 

@@ -23,6 +23,34 @@
                     root.manager.current = "supplymenu"
                     root.manager.transition.direction = "left"
 
+<Navigation>:
+    name: "navigation"
+    GridLayout:
+        cols:1
+        Label:
+            text: "Choose screen to navigate to:"
+        GridLayout:
+            cols:3
+            Button:
+                text: "Main Menu"
+                on_release: 
+                    root.manager.current = "main"
+                    root.manager.transition.direction= "right"
+
+            Button:
+                text: "Supply Menu"
+                on_release: 
+                    root.manager.current = "supplymenu"
+                    root.manager.transition.direction= "right"
+            Button:
+                text: "Access Menu"
+                on_release: 
+                    root.manager.current = "accessmenu"
+                    root.manager.transition.direction= "right"
+
+
+
+
 
 <SupplyMenu>:
     name: "supplymenu"
@@ -65,6 +93,8 @@
             on_release:
                 root.manager.current = "main"
                 root.manager.transition.direction= "right"
+
+
 
 <SupplyMedicine>:
     name: "supplymedicine"
@@ -125,13 +155,62 @@
             Button:
                 text: "Submit Details"
                 on_release:
-                    root.manager.current = "main"
-                    root.manager.transition.direction= "right"
+                    root.manager.current = "navigation"
+                    root.manager.transition.direction= "left"
                     root.assignmedicine()
                     root.resetmedicine()
+
             
             Button:
                 text: "Back"
                 on_release:
                     root.manager.current = "supplymenu"
                     root.manager.transition.direction= "right"
+
+
+
+
+
+#---------------------------------------------------------ACCESS---------------------------------------------
+
+<AccessMenu>:
+    name: "accessmenu"
+
+    city: city
+
+    GridLayout:
+        cols: 1
+        size: root.width, root.height
+        
+        GridLayout:
+            cols: 2
+
+            Label:
+                text: "City: "
+            TextInput:
+                id: city
+                multiline: False
+        
+        GridLayout:
+            cols: 4
+
+            Button:
+                text: "Medicine"
+                # on_release: 
+                #     root.manager.current = "supplymedicine"
+                #     root.manager.transition.direction= "left"
+                #     root.assigncity()
+                #     root.resetcity()
+
+            Button:
+                text: "Bed"
+            Button:
+                text: "Medical Equipment"
+            Button:
+                text: "Blood"
+
+        Button:
+            text: "Back"
+            on_release:
+                root.manager.current = "main"
+                root.manager.transition.direction= "right"
