@@ -27,6 +27,8 @@
 <SupplyMenu>:
     name: "supplymenu"
 
+    city: city
+
     GridLayout:
         cols: 1
         size: root.width, root.height
@@ -37,7 +39,7 @@
             Label:
                 text: "City: "
             TextInput:
-                id: supplycity
+                id: city
                 multiline: False
         
         GridLayout:
@@ -48,6 +50,8 @@
                 on_release: 
                     root.manager.current = "supplymedicine"
                     root.manager.transition.direction= "left"
+                    root.assigncity()
+                    root.resetcity()
 
             Button:
                 text: "Bed"
@@ -56,12 +60,25 @@
             Button:
                 text: "Blood"
 
+        Button:
+            text: "Back"
+            on_release:
+                root.manager.current = "main"
+                root.manager.transition.direction= "right"
+
 <SupplyMedicine>:
     name: "supplymedicine"
     
-    GridLayout:
-        rows:2
+    medid: medid
+    medname: medname
+    medaddress: medaddress
+    medstock: medstock
+    medprice: medprice
+    medcontact: medcontact
 
+    GridLayout:
+        cols: 1
+        rows: 2
         GridLayout:
             cols:2
             rows:6
@@ -101,6 +118,20 @@
             TextInput:
                 id: medcontact
                 multiline: False
-        Button:
-            #reset all values to empty (IMP)
-            text: "Submit Details"
+
+        GridLayout:
+            cols: 2
+            rows: 1
+            Button:
+                text: "Submit Details"
+                on_release:
+                    root.manager.current = "main"
+                    root.manager.transition.direction= "right"
+                    root.assignmedicine()
+                    root.resetmedicine()
+            
+            Button:
+                text: "Back"
+                on_release:
+                    root.manager.current = "supplymenu"
+                    root.manager.transition.direction= "right"
