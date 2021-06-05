@@ -30,6 +30,7 @@ class SupplyMenu(Screen):
     def assigncity(self):
         global city
         city = self.city.text
+        self.resetcity()
 
     def resetcity(self):
         self.city.text = ""
@@ -55,6 +56,8 @@ class SupplyMedicine(Screen):
         val = (id, name, city, address, stock, price, contact)
         # mycur.execute(sql, val)
         # conn.commit()
+
+        self.resetmedicine()
         popupS()
 
     def resetmedicine(self):
