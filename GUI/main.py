@@ -68,9 +68,7 @@ class SupplyMedicine(Screen):
         self.medprice.text = ""
         self.medcontact.text = ""
 
-<<<<<<< Updated upstream
 #-------------------------------------ACCESS SCREENS--------------------------------------------
-=======
 class SupplyBed(Screen):
     hospid = ObjectProperty(None)
     hospname = ObjectProperty(None)
@@ -85,7 +83,6 @@ class SupplyBed(Screen):
     def resetbed(self):
         pass
 
->>>>>>> Stashed changes
 
 class AccessMenu(Screen):
     pass
