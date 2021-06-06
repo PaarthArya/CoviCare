@@ -34,18 +34,18 @@
             cols:3
             Button:
                 text: "Main Menu"
-                on_release: 
+                on_release:
                     root.manager.current = "main"
                     root.manager.transition.direction= "right"
 
             Button:
                 text: "Supply Menu"
-                on_release: 
+                on_release:
                     root.manager.current = "supplymenu"
                     root.manager.transition.direction= "right"
             Button:
                 text: "Access Menu"
-                on_release: 
+                on_release:
                     root.manager.current = "accessmenu"
                     root.manager.transition.direction= "right"
 
@@ -73,7 +73,7 @@
 
             Button:
                 text: "Medicine"
-                on_release: 
+                on_release:
                     root.manager.current = "supplymedicine"
                     root.manager.transition.direction= "left"
                     root.assigncity()
@@ -230,7 +230,6 @@
                     root.manager.current = "navigation"
                     root.manager.transition.direction= "left"
                     root.assignbed()
-                    # root.resetbed()
 
             
             Button:
@@ -241,7 +240,7 @@
 
 
 
-#---------------------------------------------------------ACCESS---------------------------------------------
+#------------------------------------------ACCESS---------------------------------------------
 
 
 <AccessMenu>:
@@ -267,7 +266,7 @@
 
             Button:
                 text: "Medicine"
-                # on_release: 
+                # on_release:
                 #     root.manager.current = "supplymedicine"
                 #     root.manager.transition.direction= "left"
                 #     root.assigncity()

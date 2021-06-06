@@ -68,7 +68,7 @@ class SupplyMedicine(Screen):
         self.medprice.text = ""
         self.medcontact.text = ""
 
-#-------------------------------------ACCESS SCREENS--------------------------------------------
+
 class SupplyBed(Screen):
     hospid = ObjectProperty(None)
     hospname = ObjectProperty(None)
@@ -78,10 +78,14 @@ class SupplyBed(Screen):
     hospcontact = ObjectProperty(None)
     
     def assignbed(self):
-        popupS
+        self.resetbed()
+        popupS()
 
     def resetbed(self):
         pass
+
+
+#-------------------------------------ACCESS SCREENS--------------------------------------------
 
 
 class AccessMenu(Screen):
