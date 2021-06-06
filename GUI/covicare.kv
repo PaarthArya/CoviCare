@@ -80,6 +80,12 @@
 
             Button:
                 text: "Bed"
+                on_release:
+                    root.manager.current = "supplybed"
+                    root.manager.transition.direction = "left"
+                    root.assigncity()
+                    root.resetcity()
+
             Button:
                 text: "Medical Equipment"
             Button:
@@ -162,6 +168,82 @@
                     root.manager.transition.direction= "right"
 
 
+<<<<<<< Updated upstream
+=======
+<SupplyBed>:
+    name: "supplybed"
+    
+    hospid: hospid
+    hospname: hospname
+    hospaddress: hospaddress
+    bedtype: bedtype
+    bedcount: bedcount
+    hospcontact: hospcontact
+    
+    GridLayout:
+        cols: 1
+        rows: 2
+        GridLayout:
+            cols:2
+            rows:6
+
+            Label:
+                text: "Hospital ID: "
+            TextInput:
+                id: hospid
+                multiline: False
+
+            Label:
+                text: "Hospital Name: "
+            TextInput:
+                id: hospname
+                multiline: False
+
+            Label:
+                text: "Address: "
+            TextInput:
+                id: hospaddress
+                multiline: True
+
+            Label:
+                text: "Type of Bed: "
+            TextInput:
+                id: bedtype
+                multiline: False
+
+            Label:
+                text: "No. of Beds: "
+            TextInput:
+                id: bedcount
+                multiline: False
+
+            Label:
+                text: "Contact: "
+            TextInput:
+                id: hospcontact
+                multiline: False
+
+        GridLayout:
+            cols: 2
+            rows: 1
+            Button:
+                text: "Submit Details"
+                on_release:
+                    root.manager.current = "navigation"
+                    root.manager.transition.direction= "left"
+                    root.assignbed()
+                    # root.resetbed()
+
+            
+            Button:
+                text: "Back"
+                on_release:
+                    root.manager.current = "accessmenu"
+                    root.manager.transition.direction= "right"
+
+
+
+>>>>>>> Stashed changes
 #---------------------------------------------------------ACCESS---------------------------------------------
 
 

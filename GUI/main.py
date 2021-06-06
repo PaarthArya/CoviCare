@@ -68,7 +68,24 @@ class SupplyMedicine(Screen):
         self.medprice.text = ""
         self.medcontact.text = ""
 
+<<<<<<< Updated upstream
 #-------------------------------------ACCESS SCREENS--------------------------------------------
+=======
+class SupplyBed(Screen):
+    hospid = ObjectProperty(None)
+    hospname = ObjectProperty(None)
+    hospaddress = ObjectProperty(None)
+    bedtype = ObjectProperty(None)
+    bedcount = ObjectProperty(None)
+    hospcontact = ObjectProperty(None)
+    
+    def assignbed(self):
+        popupS
+
+    def resetbed(self):
+        pass
+
+>>>>>>> Stashed changes
 
 class AccessMenu(Screen):
     pass
@@ -97,6 +114,7 @@ class CoviCare(App):
         sm.add_widget(MainWindow(name="main"))
         sm.add_widget(SupplyMenu(name="supplymenu"))
         sm.add_widget(SupplyMedicine(name="supplymedicine"))
+        sm.add_widget(SupplyBed(name="supplybed"))
         sm.add_widget(Navigation(name="navigation"))
         sm.add_widget(AccessMenu(name="accessmenu"))
         # returning the screen manager which provides the app
