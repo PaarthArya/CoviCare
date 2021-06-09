@@ -88,6 +88,12 @@
 
             Button:
                 text: "Medical Equipment"
+                on_release:
+                    root.manager.current = "supplyequipment"
+                    root.manager.transition.direction = "left"
+                    root.assigncity()
+                    root.resetcity()
+                    
             Button:
                 text: "Blood"
 
@@ -235,9 +241,72 @@
             Button:
                 text: "Back"
                 on_release:
-                    root.manager.current = "accessmenu"
+                    root.manager.current = "supplymenu"
                     root.manager.transition.direction= "right"
 
+
+<SupplyEquipment>:
+    name: "supplyequipment"
+    
+    equipid: equipid
+    equiptype: equiptype
+    equipstock: equipstock
+    equipprice: equipprice
+    equipcontact: equipcontact
+    
+    GridLayout:
+        cols: 1
+        rows: 2
+        GridLayout:
+            cols:2
+            rows:5
+
+            Label:
+                text: "Equipment ID: "
+            TextInput:
+                id: equipid
+                multiline: False
+
+            Label:
+                text: "Equipment Type: "
+            TextInput:
+                id: equiptype
+                multiline: False
+
+            Label:
+                text: "Stock: "
+            TextInput:
+                id: equipstock
+                multiline: False
+
+            Label:
+                text: "Price: "
+            TextInput:
+                id: equipprice
+                multiline: False
+
+            Label:
+                text: "Contact: "
+            TextInput:
+                id: equipcontact
+                multiline: False
+
+        GridLayout:
+            cols: 2
+            rows: 1
+            Button:
+                text: "Submit Details"
+                on_release:
+                    root.manager.current = "navigation"
+                    root.manager.transition.direction= "left"
+                    root.assignequip()
+
+            
+            Button:
+                text: "Back"
+                on_release:
+                    root.manager.current = "supplymenu"
+                    root.manager.transition.direction= "right"
 
 
 #------------------------------------------ACCESS---------------------------------------------

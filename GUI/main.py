@@ -84,6 +84,21 @@ class SupplyBed(Screen):
     def resetbed(self):
         pass
 
+class SupplyEquipment(Screen):
+    equipid = ObjectProperty(None)
+    equiptype = ObjectProperty(None)
+    equipstock = ObjectProperty(None)
+    equipprice = ObjectProperty(None)
+    equipcontact = ObjectProperty(None)
+
+    def assignequip(self):
+        self.resetequip()
+        popupS()
+    
+    def resetequip(self):
+        pass
+
+
 
 #-------------------------------------ACCESS SCREENS--------------------------------------------
 
@@ -113,11 +128,17 @@ class CoviCare(App):
         sm = ScreenManager()
         # adding screens through widgets
         sm.add_widget(MainWindow(name="main"))
+        sm.add_widget(Navigation(name="navigation"))
+#supply
         sm.add_widget(SupplyMenu(name="supplymenu"))
         sm.add_widget(SupplyMedicine(name="supplymedicine"))
         sm.add_widget(SupplyBed(name="supplybed"))
-        sm.add_widget(Navigation(name="navigation"))
+        sm.add_widget(SupplyEquipment(name="supplyequipment"))
+        # sm.add_widget(SupplyEquipment(name="supplyblood"))
+#access        
         sm.add_widget(AccessMenu(name="accessmenu"))
+
+    
         # returning the screen manager which provides the app
         return sm
 
