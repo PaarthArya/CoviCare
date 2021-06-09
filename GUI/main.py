@@ -98,6 +98,19 @@ class SupplyEquipment(Screen):
     def resetequip(self):
         pass
 
+class SupplyBlood(Screen):
+    bloodid = ObjectProperty(None)
+    bloodname = ObjectProperty(None)
+    bloodtype = ObjectProperty(None)
+    bloodrecovery = ObjectProperty(None)
+    bloodcontact = ObjectProperty(None)
+
+    def assignblood(self):
+        self.resetblood()
+        popupS()
+
+    def resetblood(self):
+        pass
 
 
 #-------------------------------------ACCESS SCREENS--------------------------------------------
@@ -134,7 +147,7 @@ class CoviCare(App):
         sm.add_widget(SupplyMedicine(name="supplymedicine"))
         sm.add_widget(SupplyBed(name="supplybed"))
         sm.add_widget(SupplyEquipment(name="supplyequipment"))
-        # sm.add_widget(SupplyEquipment(name="supplyblood"))
+        sm.add_widget(SupplyBlood(name="supplyblood"))
 #access        
         sm.add_widget(AccessMenu(name="accessmenu"))
 

@@ -93,9 +93,14 @@
                     root.manager.transition.direction = "left"
                     root.assigncity()
                     root.resetcity()
-                    
+
             Button:
                 text: "Blood"
+                on_release:
+                    root.manager.current = "supplyblood"
+                    root.manager.transition.direction = "left"
+                    root.assigncity()
+                    root.resetcity()
 
         Button:
             text: "Back"
@@ -300,6 +305,70 @@
                     root.manager.current = "navigation"
                     root.manager.transition.direction= "left"
                     root.assignequip()
+
+            
+            Button:
+                text: "Back"
+                on_release:
+                    root.manager.current = "supplymenu"
+                    root.manager.transition.direction= "right"
+
+<SupplyBlood>:
+    name: "supplyblood"
+    
+    bloodid: bloodid
+    bloodname: bloodname
+    bloodtype: bloodtype
+    bloodrecovery: bloodrecovery
+    bloodcontact: bloodcontact
+
+    GridLayout:
+        cols: 1
+        rows: 2
+        GridLayout:
+            cols:2
+            rows:5
+
+            Label:
+                text: "Donor ID: "
+            TextInput:
+                id: bloodid
+                multiline: False
+
+
+            Label:
+                text: "Donor Name: "
+            TextInput:
+                id: bloodname
+                multiline: False
+
+            Label:
+                text: "Blood Type: "
+            TextInput:
+                id: bloodtype
+                multiline: False
+
+            Label:
+                text: "Recovery Date: "
+            TextInput:
+                id: bloodrecovery
+                multiline: False
+
+            Label:
+                text: "Contact: "
+            TextInput:
+                id: bloodcontact
+                multiline: False
+
+        GridLayout:
+            cols: 2
+            rows: 1
+            Button:
+                text: "Submit Details"
+                on_release:
+                    root.manager.current = "navigation"
+                    root.manager.transition.direction= "left"
+                    root.assignblood()
 
             
             Button:
