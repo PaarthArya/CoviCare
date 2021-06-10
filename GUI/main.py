@@ -27,16 +27,57 @@ city = ""
 class SupplyMenu(Screen):
     supplycity = ObjectProperty(None)
 
-    def assigncity(self):
+    # store city input in global variable for data entry and change screens
+    def assigncitym(self):
         global city
-        city = self.city.text
+
+        if self.supplycity.text != "":
+            city = self.supplycity.text
+            sm.current = "supplymedicine"
+        else:
+            invalidcity()
+
+        self.resetcity()
+
+    def assigncitybe(self):
+        global city
+
+        if self.supplycity.text != "":
+            city = self.supplycity.text
+            sm.current = "supplybed"
+        else:
+            invalidcity()
+            
+        self.resetcity()
+
+    def assigncitye(self):
+        global city
+
+        if self.supplycity.text != "":
+            city = self.supplycity.text
+            sm.current = "supplyequipment"
+        else:
+            invalidcity()
+
+        self.resetcity()
+
+    def assigncitybl(self):
+        global city
+
+        if self.supplycity.text != "":
+            city = self.supplycity.text
+            sm.current = "supplyblood"
+        else:
+            invalidcity()
+
         self.resetcity()
 
     def resetcity(self):
-        self.city.text = ""
+        self.supplycity.text = ""
 
 
 class SupplyMedicine(Screen):
+    # retrieve inputs in local variables
     medid = ObjectProperty(None)
     medname = ObjectProperty(None)
     medaddress = ObjectProperty(None)
@@ -44,6 +85,7 @@ class SupplyMedicine(Screen):
     medprice = ObjectProperty(None)
     medcontact = ObjectProperty(None)
 
+    # insert into database and display popup
     def assignmedicine(self):
         id = self.medid.text
         name = self.medname.text
@@ -52,14 +94,19 @@ class SupplyMedicine(Screen):
         price = self.medprice.text
         contact = self.medcontact.text
 
-        sql = "INSERT INTO MEDICINE VALUES(%s, %s, %s, %s, %s, %s, %s);"
-        val = (id, name, city, address, stock, price, contact)
-        # mycur.execute(sql, val)
-        # conn.commit()
-
+        if str(id).isdigit() and name != "" and address != "" and str(stock).isdigit() and (str(price).isdigit() or str(price).isdecimal()) and contact != "":
+            sql = "INSERT INTO MEDICINE VALUES(%s, %s, %s, %s, %s, %s, %s);"
+            val = (id, name, city, address, stock, price, contact)
+            mycur.execute(sql, val)
+            conn.commit()
+            sm.current = "navigation"
+            popupS()
+        else:
+            invalid()
+        
         self.resetmedicine()
-        popupS()
 
+    # reset inputs
     def resetmedicine(self):
         self.medid.text = ""
         self.medname.text = ""
@@ -78,11 +125,32 @@ class SupplyBed(Screen):
     hospcontact = ObjectProperty(None)
     
     def assignbed(self):
+        id = self.hospid.text
+        name = self.hospname.text
+        address = self.hospaddress.text
+        htype = self.bedtype.text
+        count = self.bedcount.text
+        contact = self.hospcontact.text
+
+        if str(id).isdigit() and name != "" and address != "" and htype != "" and str(count).isdigit() and contact != "":
+            sql = "INSERT INTO BED VALUES(%s, %s, %s, %s, %s, %s, %s);"
+            val = (id, name, city, address, htype, count, contact)
+            mycur.execute(sql, val)
+            conn.commit()
+            sm.current = "navigation"
+            popupS()
+        else:
+            invalid()
+
         self.resetbed()
-        popupS()
 
     def resetbed(self):
-        pass
+        self.hospid.text = ""
+        self.hospname.text = ""
+        self.hospaddress.text = ""
+        self.bedtype.text = ""
+        self.bedcount.text = ""
+        self.hospcontact.text = ""
 
 class SupplyEquipment(Screen):
     equipid = ObjectProperty(None)
@@ -92,25 +160,62 @@ class SupplyEquipment(Screen):
     equipcontact = ObjectProperty(None)
 
     def assignequip(self):
+        id = self.equipid.text
+        etype = self.equiptype.text
+        stock = self.equipstock.text
+        price = self.equipprice.text
+        contact = self.equipcontact.text
+
+        if str(id).isdigit() and etype != "" and str(stock).isdigit() and (str(price).isdigit() or str(price).isdecimal()) and contact != "":
+            sql = "INSERT INTO EQUIPMENT VALUES(%s, %s, %s, %s, %s, %s);"
+            val = (id, etype, city, stock, price, contact)
+            mycur.execute(sql, val)
+            conn.commit()
+            sm.current = "navigation"
+            popupS()
+        else:
+            invalid()
+
         self.resetequip()
-        popupS()
+        
     
     def resetequip(self):
-        pass
+        self.equipid.text = ""
+        self.equiptype.text = ""
+        self.equipstock.text = ""
+        self.equipprice.text = ""
+        self.equipcontact.text = ""
 
 class SupplyBlood(Screen):
     bloodid = ObjectProperty(None)
     bloodname = ObjectProperty(None)
     bloodtype = ObjectProperty(None)
-    bloodrecovery = ObjectProperty(None)
     bloodcontact = ObjectProperty(None)
 
     def assignblood(self):
+        id = self.bloodid.text
+        name = self.bloodname.text
+        btype = self.bloodtype.text
+        contact = self.bloodcontact.text
+
+        if str(id).isdigit() and name != "" and btype != "" and contact != "":
+            sql = "INSERT INTO BLOOD VALUES(%s, %s, %s, %s, %s);"
+            val = (id, name, city, btype, contact)
+            mycur.execute(sql, val)
+            conn.commit()
+            sm.current = "navigation"
+            popupS()
+        else:
+            invalid()
+
         self.resetblood()
-        popupS()
+        
 
     def resetblood(self):
-        pass
+        self.bloodid.text = ""
+        self.bloodname.text = ""
+        self.bloodtype.text = ""
+        self.bloodcontact.text = ""
 
 
 #-------------------------------------ACCESS SCREENS--------------------------------------------
@@ -128,30 +233,51 @@ class MainWindow(Screen):
     pass
 
 
+class WindowManager(ScreenManager):
+    pass
+
+
 # global functions
 def popupS():
-    pop = Popup(title='Success', content=Label(text='Your entry has been recorded'), size_hint=(None, None), size=(300, 300))
+    pop = Popup(title='Success', content=Label(text='Your entry has been recorded.'), size_hint=(None, None), size=(300, 300))
     pop.open()
+
+def invalid():
+    pop = Popup(title='Error', content=Label(text='Invalid Entry! Please try again.'), size_hint=(None, None), size=(300, 300))
+    pop.open()
+
+def invalidcity():
+    pop = Popup(title='Error', content=Label(text='City field cannot be empty.'), size_hint=(None, None), size=(300, 300))
+    pop.open()
+
+
+# build using kv file
+kv = Builder.load_file("covicare.kv")
+
+# setting the screen manager
+sm = WindowManager()
+
+# adding screens through widgets
+sm.add_widget(MainWindow(name="main"))
+sm.add_widget(Navigation(name="navigation"))
+
+# supply
+sm.add_widget(SupplyMenu(name="supplymenu"))
+sm.add_widget(SupplyMedicine(name="supplymedicine"))
+sm.add_widget(SupplyBed(name="supplybed"))
+sm.add_widget(SupplyEquipment(name="supplyequipment"))
+sm.add_widget(SupplyBlood(name="supplyblood"))
+
+# access        
+sm.add_widget(AccessMenu(name="accessmenu"))
+    
+# current screen
+sm.current = "main"
 
 
 # main app build
 class CoviCare(App):
     def build(self):
-        # setting the screen manager 
-        sm = ScreenManager()
-        # adding screens through widgets
-        sm.add_widget(MainWindow(name="main"))
-        sm.add_widget(Navigation(name="navigation"))
-#supply
-        sm.add_widget(SupplyMenu(name="supplymenu"))
-        sm.add_widget(SupplyMedicine(name="supplymedicine"))
-        sm.add_widget(SupplyBed(name="supplybed"))
-        sm.add_widget(SupplyEquipment(name="supplyequipment"))
-        sm.add_widget(SupplyBlood(name="supplyblood"))
-#access        
-        sm.add_widget(AccessMenu(name="accessmenu"))
-
-    
         # returning the screen manager which provides the app
         return sm
 

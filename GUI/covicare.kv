@@ -26,10 +26,12 @@
 
 <Navigation>:
     name: "navigation"
+
     GridLayout:
-        cols:1
+        cols: 1
         Label:
             text: "Choose screen to navigate to:"
+
         GridLayout:
             cols:3
             Button:
@@ -39,21 +41,22 @@
                     root.manager.transition.direction= "right"
 
             Button:
-                text: "Supply Menu"
-                on_release:
-                    root.manager.current = "supplymenu"
-                    root.manager.transition.direction= "right"
-            Button:
                 text: "Access Menu"
                 on_release:
                     root.manager.current = "accessmenu"
+                    root.manager.transition.direction= "right"
+
+            Button:
+                text: "Supply Menu"
+                on_release:
+                    root.manager.current = "supplymenu"
                     root.manager.transition.direction= "right"
 
 
 <SupplyMenu>:
     name: "supplymenu"
 
-    city: city
+    supplycity: city
 
     GridLayout:
         cols: 1
@@ -74,33 +77,26 @@
             Button:
                 text: "Medicine"
                 on_release:
-                    root.manager.current = "supplymedicine"
                     root.manager.transition.direction= "left"
-                    root.assigncity()
+                    root.assigncitym()
 
             Button:
                 text: "Bed"
                 on_release:
-                    root.manager.current = "supplybed"
                     root.manager.transition.direction = "left"
-                    root.assigncity()
-                    root.resetcity()
+                    root.assigncitybe()
 
             Button:
                 text: "Medical Equipment"
                 on_release:
-                    root.manager.current = "supplyequipment"
                     root.manager.transition.direction = "left"
-                    root.assigncity()
-                    root.resetcity()
+                    root.assigncitye()
 
             Button:
                 text: "Blood"
                 on_release:
-                    root.manager.current = "supplyblood"
                     root.manager.transition.direction = "left"
-                    root.assigncity()
-                    root.resetcity()
+                    root.assigncitybl()
 
         Button:
             text: "Back"
@@ -123,8 +119,8 @@
         cols: 1
         rows: 2
         GridLayout:
-            cols:2
-            rows:6
+            cols: 2
+            rows: 6
 
             Label:
                 text: "Medicine ID: "
@@ -168,7 +164,6 @@
             Button:
                 text: "Submit Details"
                 on_release:
-                    root.manager.current = "navigation"
                     root.manager.transition.direction= "left"
                     root.assignmedicine()
 
@@ -193,8 +188,8 @@
         cols: 1
         rows: 2
         GridLayout:
-            cols:2
-            rows:6
+            cols: 2
+            rows: 6
 
             Label:
                 text: "Hospital ID: "
@@ -238,10 +233,8 @@
             Button:
                 text: "Submit Details"
                 on_release:
-                    root.manager.current = "navigation"
                     root.manager.transition.direction= "left"
                     root.assignbed()
-
             
             Button:
                 text: "Back"
@@ -263,8 +256,8 @@
         cols: 1
         rows: 2
         GridLayout:
-            cols:2
-            rows:5
+            cols: 2
+            rows: 5
 
             Label:
                 text: "Equipment ID: "
@@ -302,10 +295,8 @@
             Button:
                 text: "Submit Details"
                 on_release:
-                    root.manager.current = "navigation"
                     root.manager.transition.direction= "left"
                     root.assignequip()
-
             
             Button:
                 text: "Back"
@@ -319,22 +310,20 @@
     bloodid: bloodid
     bloodname: bloodname
     bloodtype: bloodtype
-    bloodrecovery: bloodrecovery
     bloodcontact: bloodcontact
 
     GridLayout:
         cols: 1
         rows: 2
         GridLayout:
-            cols:2
-            rows:5
+            cols: 2
+            rows: 4
 
             Label:
                 text: "Donor ID: "
             TextInput:
                 id: bloodid
                 multiline: False
-
 
             Label:
                 text: "Donor Name: "
@@ -349,12 +338,6 @@
                 multiline: False
 
             Label:
-                text: "Recovery Date: "
-            TextInput:
-                id: bloodrecovery
-                multiline: False
-
-            Label:
                 text: "Contact: "
             TextInput:
                 id: bloodcontact
@@ -366,10 +349,8 @@
             Button:
                 text: "Submit Details"
                 on_release:
-                    root.manager.current = "navigation"
                     root.manager.transition.direction= "left"
                     root.assignblood()
-
             
             Button:
                 text: "Back"
