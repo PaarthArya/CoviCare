@@ -18,6 +18,7 @@ mycur = conn.cursor()
 
 # global variables
 city = ""
+myresult = []
 
 
 # setting the screens
@@ -231,6 +232,10 @@ class AccessMenu(Screen):
         if self.accesscity.text != "":
             city = self.accesscity.text
             sm.current = "accessmedicine"
+            global myresult
+            mycur.execute("SELECT * FROM MEDICINE WHERE city = %s;", (city,))
+            myresult = mycur.fetchall()
+            print(myresult)
         else:
             invalidcity()
 
@@ -242,6 +247,10 @@ class AccessMenu(Screen):
         if self.accesscity.text != "":
             city = self.accesscity.text
             sm.current = "accessbed"
+            global myresult
+            mycur.execute("SELECT * FROM BED WHERE city = %s;", (city,))
+            myresult = mycur.fetchall()
+            print(myresult)
         else:
             invalidcity()
             
@@ -253,6 +262,10 @@ class AccessMenu(Screen):
         if self.accesscity.text != "":
             city = self.accesscity.text
             sm.current = "accessequipment"
+            global myresult
+            mycur.execute("SELECT * FROM EQUIPMENT WHERE city = %s;", (city,))
+            myresult = mycur.fetchall()
+            print(myresult)
         else:
             invalidcity()
 
@@ -264,6 +277,10 @@ class AccessMenu(Screen):
         if self.accesscity.text != "":
             city = self.accesscity.text
             sm.current = "accessblood"
+            global myresult
+            mycur.execute("SELECT * FROM BLOOD WHERE city = %s;", (city,))
+            myresult = mycur.fetchall()
+            print(myresult)
         else:
             invalidcity()
 
