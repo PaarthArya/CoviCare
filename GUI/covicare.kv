@@ -365,7 +365,7 @@
 <AccessMenu>:
     name: "accessmenu"
 
-    city: city
+    accesscity: city
 
     GridLayout:
         cols: 1
@@ -385,21 +385,50 @@
 
             Button:
                 text: "Medicine"
-                # on_release:
-                #     root.manager.current = "supplymedicine"
-                #     root.manager.transition.direction= "left"
-                #     root.assigncity()
-                #     root.resetcity()
+                on_release:
+                    root.manager.transition.direction= "left"
+                    root.assigncitym()
 
             Button:
                 text: "Bed"
+                on_release:
+                    root.manager.transition.direction= "left"
+                    root.assigncitybe()                
+
             Button:
                 text: "Medical Equipment"
+                on_release:
+                    root.manager.transition.direction= "left"
+                    root.assigncitye()
+
             Button:
                 text: "Blood"
+                on_release:
+                    root.manager.transition.direction= "left"
+                    root.assigncitybl()
 
         Button:
             text: "Back"
             on_release:
                 root.manager.current = "main"
                 root.manager.transition.direction= "right"
+
+<AccessMedicine>:
+    name: "accessmedicine"
+
+    GridLayout:
+
+<AccessBed>:
+    name: "accessbed"
+
+    GridLayout:
+
+<AccessEquipment>:
+    name: "accessequipment"
+
+    GridLayout:
+
+<AccessBlood>:
+    name: "accessblood"
+
+    GridLayout:

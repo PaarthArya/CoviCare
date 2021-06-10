@@ -222,6 +222,70 @@ class SupplyBlood(Screen):
 
 
 class AccessMenu(Screen):
+    accesscity = ObjectProperty(None)
+
+    # store city input in global variable for data entry and change screens
+    def assigncitym(self):
+        global city
+
+        if self.accesscity.text != "":
+            city = self.accesscity.text
+            sm.current = "accessmedicine"
+        else:
+            invalidcity()
+
+        self.resetcity()
+
+    def assigncitybe(self):
+        global city
+
+        if self.accesscity.text != "":
+            city = self.accesscity.text
+            sm.current = "accessbed"
+        else:
+            invalidcity()
+            
+        self.resetcity()
+
+    def assigncitye(self):
+        global city
+
+        if self.accesscity.text != "":
+            city = self.accesscity.text
+            sm.current = "accessequipment"
+        else:
+            invalidcity()
+
+        self.resetcity()
+
+    def assigncitybl(self):
+        global city
+
+        if self.accesscity.text != "":
+            city = self.accesscity.text
+            sm.current = "accessblood"
+        else:
+            invalidcity()
+
+        self.resetcity()
+
+    def resetcity(self):
+        self.accesscity.text = ""
+
+
+class AccessMedicine(Screen):
+    pass
+
+
+class AccessBed(Screen):
+    pass
+
+
+class AccessEquipment(Screen):
+    pass
+
+
+class AccessBlood(Screen):
     pass
 
 
@@ -270,6 +334,10 @@ sm.add_widget(SupplyBlood(name="supplyblood"))
 
 # access        
 sm.add_widget(AccessMenu(name="accessmenu"))
+sm.add_widget(AccessMedicine(name="accessmedicine"))
+sm.add_widget(AccessBed(name="accessbed"))
+sm.add_widget(AccessEquipment(name="accessequipment"))
+sm.add_widget(AccessBlood(name="accessblood"))
     
 # current screen
 sm.current = "main"
