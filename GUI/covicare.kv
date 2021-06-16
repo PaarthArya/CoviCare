@@ -4,7 +4,7 @@
 
 # ----------------Object Properties--------------------
 <Button>:
-    font_size: 20
+    font_size: 30
     background_color: 0.4, 1, 0.8, 1
 
 
@@ -16,7 +16,7 @@
         size: root.width, root.height
         Label:
             text: "Welcome to CoviCare"
-            font_size: 28
+            font_size: 40
 
         GridLayout:
             cols: 2
@@ -40,6 +40,7 @@
         cols: 1
         Label:
             text: "Choose screen to navigate to:"
+            font_size: 40
 
         GridLayout:
             cols:3
@@ -76,6 +77,7 @@
 
             Label:
                 text: "City: "
+                font_size: 30
             TextInput:
                 id: city
                 multiline: False
@@ -97,6 +99,7 @@
 
             Button:
                 text: "Medical Equipment"
+                font_size: 22
                 on_release:
                     root.manager.transition.direction = "left"
                     root.assigncitye()
@@ -133,36 +136,42 @@
 
             Label:
                 text: "Medicine ID: "
+                font_size: 25
             TextInput:
                 id: medid
                 multiline: False
 
             Label:
                 text: "Medicine Name: "
+                font_size: 25
             TextInput:
                 id: medname
                 multiline: False
 
             Label:
                 text: "Address: "
+                font_size: 25
             TextInput:
                 id: medaddress
                 multiline: True
 
             Label:
                 text: "Stock: "
+                font_size: 25
             TextInput:
                 id: medstock
                 multiline: False
 
             Label:
                 text: "Price: "
+                font_size: 25
             TextInput:
                 id: medprice
                 multiline: False
 
             Label:
                 text: "Contact: "
+                font_size: 25
             TextInput:
                 id: medcontact
                 multiline: False
@@ -385,6 +394,7 @@
 
             Label:
                 text: "City: "
+                font_size: 30
             TextInput:
                 id: city
                 multiline: False
@@ -406,6 +416,7 @@
 
             Button:
                 text: "Medical Equipment"
+                font_size: 22
                 on_release:
                     root.manager.transition.direction= "left"
                     root.assigncitye()
