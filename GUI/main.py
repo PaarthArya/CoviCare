@@ -320,15 +320,15 @@ class WindowManager(ScreenManager):
 
 # global functions
 def popupS():
-    pop = Popup(title='Success', content=Label(text='Your entry has been recorded.'), size_hint=(None, None), size=(300, 300))
+    pop = Popup(title='Success', content=Label(text='Your entry has been recorded.', font_size=15), size_hint=(None, None), size=(300, 300))
     pop.open()
 
 def invalid():
-    pop = Popup(title='Error', content=Label(text='Invalid Entry! Please try again.'), size_hint=(None, None), size=(300, 300))
+    pop = Popup(title='Error', content=Label(text='Invalid Entry! Please try again.', font_size=15), size_hint=(None, None), size=(300, 300))
     pop.open()
 
 def invalidcity():
-    pop = Popup(title='Error', content=Label(text='City field cannot be empty.'), size_hint=(None, None), size=(300, 300))
+    pop = Popup(title='Error', content=Label(text='City field cannot be empty.', font_size=15), size_hint=(None, None), size=(300, 300))
     pop.open()
 
 
