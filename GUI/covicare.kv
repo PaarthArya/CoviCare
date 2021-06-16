@@ -1,13 +1,22 @@
 #:kivy 2.0
 
+
+
+# ----------------Object Properties--------------------
+<Button>:
+    font_size: 20
+    background_color: 0.4, 1, 0.8, 1
+
+
+# --------------------------Main Screen------------------------------
 <MainWindow>:
     name: "main"
-
     GridLayout:
         cols: 1
         size: root.width, root.height
         Label:
             text: "Welcome to CoviCare"
+            font_size: 28
 
         GridLayout:
             cols: 2
