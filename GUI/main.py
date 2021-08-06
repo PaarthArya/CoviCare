@@ -2,11 +2,13 @@ import kivy
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.label import Label
-from kivy.properties import ObjectProperty
+from kivy.properties import ObjectProperty, ListProperty
 from kivy.uix.popup import Popup
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
+from kivy.uix.recycleview import RecycleView
 from kivy.uix.screenmanager import ScreenManager, Screen
 import mysql.connector
 
@@ -232,10 +234,6 @@ class AccessMenu(Screen):
         if self.accesscity.text != "":
             city = self.accesscity.text
             sm.current = "accessmedicine"
-            global myresult
-            mycur.execute("SELECT * FROM MEDICINE WHERE city = %s;", (city,))
-            myresult = mycur.fetchall()
-            print(myresult)
         else:
             invalidcity()
 
@@ -247,10 +245,6 @@ class AccessMenu(Screen):
         if self.accesscity.text != "":
             city = self.accesscity.text
             sm.current = "accessbed"
-            global myresult
-            mycur.execute("SELECT * FROM BED WHERE city = %s;", (city,))
-            myresult = mycur.fetchall()
-            print(myresult)
         else:
             invalidcity()
             
@@ -262,10 +256,6 @@ class AccessMenu(Screen):
         if self.accesscity.text != "":
             city = self.accesscity.text
             sm.current = "accessequipment"
-            global myresult
-            mycur.execute("SELECT * FROM EQUIPMENT WHERE city = %s;", (city,))
-            myresult = mycur.fetchall()
-            print(myresult)
         else:
             invalidcity()
 
@@ -277,10 +267,6 @@ class AccessMenu(Screen):
         if self.accesscity.text != "":
             city = self.accesscity.text
             sm.current = "accessblood"
-            global myresult
-            mycur.execute("SELECT * FROM BLOOD WHERE city = %s;", (city,))
-            myresult = mycur.fetchall()
-            print(myresult)
         else:
             invalidcity()
 
@@ -304,6 +290,46 @@ class AccessEquipment(Screen):
 
 class AccessBlood(Screen):
     pass
+
+
+class RecycleMedicine(RecycleView):
+    data_items = ListProperty([])
+
+    def __init__(self, **kwargs):
+        super(RecycleMedicine, self).__init__(**kwargs)
+        self.get_users()
+
+    def get_users(self):
+        city = "Gurugram"
+        mycur.execute("SELECT medicine_name, stock, price, contact FROM MEDICINE WHERE city = %s;", (city,))
+        rows = mycur.fetchall()
+
+        # create data_items
+        for row in rows:
+            for col in row:
+                self.data_items.append(col)
+        
+        self.data = [{'text': str(x)} for x in self.data_items]
+
+
+class RecycleEquipment(RecycleView):
+    data_items = ListProperty([])
+
+    def __init__(self, **kwargs):
+        super(RecycleEquipment, self).__init__(**kwargs)
+        self.get_users()
+
+    def get_users(self):
+        city = "New Delhi"
+        mycur.execute("SELECT equipment_type, stock, price, contact FROM EQUIPMENT WHERE city = %s;", (city,))
+        rows = mycur.fetchall()
+
+        # create data_items
+        for row in rows:
+            for col in row:
+                self.data_items.append(col)
+        
+        self.data = [{'text': str(x)} for x in self.data_items]
 
 
 class Navigation(Screen):
