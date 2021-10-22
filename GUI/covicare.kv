@@ -10,12 +10,10 @@
 
 <RecycleMedicine>:
     viewclass: 'Label'
+    data: [{'text': str(x)} for x in root.data_items]
     RecycleBoxLayout:
-        default_size: None, dp(56)
         default_size_hint: 1, None
-        size_hint_y: None
-        height: self.minimum_height
-        orientation: 'horizontal'
+        cols: 4
 
 <RecycleEquipment>:
     viewclass: 'Label'
@@ -481,6 +479,12 @@
         GridLayout:
             cols: 1
             RecycleMedicine:
+
+        Button:
+            text: "Back"
+            on_release:
+                root.manager.current = "accessmenu"
+                root.manager.transition.direction= "right"
 
 <AccessBed>:
     name: "accessbed"

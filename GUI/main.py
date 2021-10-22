@@ -233,6 +233,12 @@ class AccessMenu(Screen):
 
         if self.accesscity.text != "":
             city = self.accesscity.text
+            mycur.execute("SELECT medicine_name, stock, price, contact FROM MEDICINE WHERE city = %s;", (city,))
+            rows = mycur.fetchall()
+            for i in rows:
+                for j in i:
+                    print(j, end = " || ")
+                print()
             sm.current = "accessmedicine"
         else:
             invalidcity()
@@ -300,7 +306,7 @@ class RecycleMedicine(RecycleView):
         self.get_users()
 
     def get_users(self):
-        city = "Gurugram"
+        city = "New Delhi"
         mycur.execute("SELECT medicine_name, stock, price, contact FROM MEDICINE WHERE city = %s;", (city,))
         rows = mycur.fetchall()
 
