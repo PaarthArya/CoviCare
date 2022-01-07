@@ -313,8 +313,6 @@ class RV(GridLayout):
 
     def changeapps(self):
         MedicineDisplay().stop()
-        CoviCare().run()
-
 
 class MedicineDisplay(App):
     title = "Medicine Access"
@@ -391,4 +389,4 @@ class CoviCare(App):
 
 # main program
 if __name__ == "__main__":
-    CoviCare().run()
+        CoviCare().run()
