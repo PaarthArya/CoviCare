@@ -12,11 +12,9 @@ from kivy.uix.recycleview import RecycleView
 from kivy.uix.screenmanager import ScreenManager, Screen
 import mysql.connector
 
-
 # open database connection and cursor
 conn = mysql.connector.connect(host="localhost", user="root", password="Covicare123", database='covicare')
 mycur = conn.cursor()
-
 
 # global variables
 city = ""
@@ -25,7 +23,7 @@ myresult = []
 
 # setting the screens
 
-#--------------------------------------SUPPLY SCREENS--------------------------------------------
+# --------------------------------------SUPPLY SCREENS--------------------------------------------
 
 class SupplyMenu(Screen):
     supplycity = ObjectProperty(None)
@@ -50,7 +48,7 @@ class SupplyMenu(Screen):
             sm.current = "supplybed"
         else:
             invalidcity()
-            
+
         self.resetcity()
 
     def assigncitye(self):
@@ -97,7 +95,8 @@ class SupplyMedicine(Screen):
         price = self.medprice.text
         contact = self.medcontact.text
 
-        if str(id).isdigit() and name != "" and address != "" and str(stock).isdigit() and (str(price).isdigit() or str(price).isdecimal()) and contact != "":
+        if str(id).isdigit() and name != "" and address != "" and str(stock).isdigit() and (
+                str(price).isdigit() or str(price).isdecimal()) and contact != "":
             sql = "INSERT INTO MEDICINE VALUES(%s, %s, %s, %s, %s, %s, %s);"
             val = (id, name, city, address, stock, price, contact)
             mycur.execute(sql, val)
@@ -106,7 +105,7 @@ class SupplyMedicine(Screen):
             popupS()
         else:
             invalid()
-        
+
         self.resetmedicine()
 
     # reset inputs
@@ -126,7 +125,7 @@ class SupplyBed(Screen):
     bedtype = ObjectProperty(None)
     bedcount = ObjectProperty(None)
     hospcontact = ObjectProperty(None)
-    
+
     def assignbed(self):
         id = self.hospid.text
         name = self.hospname.text
@@ -135,7 +134,8 @@ class SupplyBed(Screen):
         count = self.bedcount.text
         contact = self.hospcontact.text
 
-        if str(id).isdigit() and name != "" and address != "" and htype != "" and str(count).isdigit() and contact != "":
+        if str(id).isdigit() and name != "" and address != "" and htype != "" and str(
+                count).isdigit() and contact != "":
             sql = "INSERT INTO BED VALUES(%s, %s, %s, %s, %s, %s, %s);"
             val = (id, name, city, address, htype, count, contact)
             mycur.execute(sql, val)
@@ -155,6 +155,7 @@ class SupplyBed(Screen):
         self.bedcount.text = ""
         self.hospcontact.text = ""
 
+
 class SupplyEquipment(Screen):
     equipid = ObjectProperty(None)
     equiptype = ObjectProperty(None)
@@ -169,7 +170,8 @@ class SupplyEquipment(Screen):
         price = self.equipprice.text
         contact = self.equipcontact.text
 
-        if str(id).isdigit() and etype != "" and str(stock).isdigit() and (str(price).isdigit() or str(price).isdecimal()) and contact != "":
+        if str(id).isdigit() and etype != "" and str(stock).isdigit() and (
+                str(price).isdigit() or str(price).isdecimal()) and contact != "":
             sql = "INSERT INTO EQUIPMENT VALUES(%s, %s, %s, %s, %s, %s);"
             val = (id, etype, city, stock, price, contact)
             mycur.execute(sql, val)
@@ -180,14 +182,14 @@ class SupplyEquipment(Screen):
             invalid()
 
         self.resetequip()
-        
-    
+
     def resetequip(self):
         self.equipid.text = ""
         self.equiptype.text = ""
         self.equipstock.text = ""
         self.equipprice.text = ""
         self.equipcontact.text = ""
+
 
 class SupplyBlood(Screen):
     bloodid = ObjectProperty(None)
@@ -212,7 +214,6 @@ class SupplyBlood(Screen):
             invalid()
 
         self.resetblood()
-        
 
     def resetblood(self):
         self.bloodid.text = ""
@@ -221,7 +222,7 @@ class SupplyBlood(Screen):
         self.bloodcontact.text = ""
 
 
-#-------------------------------------ACCESS SCREENS--------------------------------------------
+# -------------------------------------ACCESS SCREENS--------------------------------------------
 
 
 class AccessMenu(Screen):
@@ -236,8 +237,9 @@ class AccessMenu(Screen):
             sm.current = "accessmedicine"
         else:
             invalidcity()
-
         self.resetcity()
+        CoviCare().stop()
+        MedicineDisplay().run()
 
     def assigncitybe(self):
         global city
@@ -247,7 +249,7 @@ class AccessMenu(Screen):
             sm.current = "accessbed"
         else:
             invalidcity()
-            
+
         self.resetcity()
 
     def assigncitye(self):
@@ -292,15 +294,15 @@ class AccessBlood(Screen):
     pass
 
 
-class RecycleMedicine(RecycleView):
+class RV(GridLayout):
     data_items = ListProperty([])
 
     def __init__(self, **kwargs):
-        super(RecycleMedicine, self).__init__(**kwargs)
+        super(RV, self).__init__(**kwargs)
         self.get_users()
 
     def get_users(self):
-        city = "Gurugram"
+
         mycur.execute("SELECT medicine_name, stock, price, contact FROM MEDICINE WHERE city = %s;", (city,))
         rows = mycur.fetchall()
 
@@ -308,28 +310,17 @@ class RecycleMedicine(RecycleView):
         for row in rows:
             for col in row:
                 self.data_items.append(col)
-        
-        self.data = [{'text': str(x)} for x in self.data_items]
+
+    def changeapps(self):
+        MedicineDisplay().stop()
+        CoviCare().run()
 
 
-class RecycleEquipment(RecycleView):
-    data_items = ListProperty([])
+class MedicineDisplay(App):
+    title = "Medicine Access"
 
-    def __init__(self, **kwargs):
-        super(RecycleEquipment, self).__init__(**kwargs)
-        self.get_users()
-
-    def get_users(self):
-        city = "New Delhi"
-        mycur.execute("SELECT equipment_type, stock, price, contact FROM EQUIPMENT WHERE city = %s;", (city,))
-        rows = mycur.fetchall()
-
-        # create data_items
-        for row in rows:
-            for col in row:
-                self.data_items.append(col)
-        
-        self.data = [{'text': str(x)} for x in self.data_items]
+    def build(self):
+        return RV()
 
 
 class Navigation(Screen):
@@ -346,15 +337,20 @@ class WindowManager(ScreenManager):
 
 # global functions
 def popupS():
-    pop = Popup(title='Success', content=Label(text='Your entry has been recorded.', font_size=15), size_hint=(None, None), size=(300, 300))
+    pop = Popup(title='Success', content=Label(text='Your entry has been recorded.', font_size=15),
+                size_hint=(None, None), size=(300, 300))
     pop.open()
+
 
 def invalid():
-    pop = Popup(title='Error', content=Label(text='Invalid Entry! Please try again.', font_size=15), size_hint=(None, None), size=(300, 300))
+    pop = Popup(title='Error', content=Label(text='Invalid Entry! Please try again.', font_size=15),
+                size_hint=(None, None), size=(300, 300))
     pop.open()
 
+
 def invalidcity():
-    pop = Popup(title='Error', content=Label(text='City field cannot be empty.', font_size=15), size_hint=(None, None), size=(300, 300))
+    pop = Popup(title='Error', content=Label(text='City field cannot be empty.', font_size=15), size_hint=(None, None),
+                size=(300, 300))
     pop.open()
 
 
@@ -381,7 +377,7 @@ sm.add_widget(AccessMedicine(name="accessmedicine"))
 sm.add_widget(AccessBed(name="accessbed"))
 sm.add_widget(AccessEquipment(name="accessequipment"))
 sm.add_widget(AccessBlood(name="accessblood"))
-    
+
 # current screen
 sm.current = "main"
 
@@ -396,4 +392,3 @@ class CoviCare(App):
 # main program
 if __name__ == "__main__":
     CoviCare().run()
-    conn.close

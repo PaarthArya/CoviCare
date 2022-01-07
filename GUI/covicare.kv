@@ -8,24 +8,6 @@
     font_size: 30
     background_color: 0.4, 1, 0.8, 1
 
-<RecycleMedicine>:
-    viewclass: 'Label'
-    RecycleBoxLayout:
-        default_size: None, dp(56)
-        default_size_hint: 1, None
-        size_hint_y: None
-        height: self.minimum_height
-        orientation: 'horizontal'
-
-<RecycleEquipment>:
-    viewclass: 'Label'
-    RecycleBoxLayout:
-        default_size: None, dp(56)
-        default_size_hint: 1, None
-        size_hint_y: None
-        height: self.minimum_height
-        orientation: 'horizontal'
-
 # --------------------------Main Screen------------------------------
 <MainWindow>:
     name: "main"
@@ -445,24 +427,9 @@
                 root.manager.current = "main"
                 root.manager.transition.direction= "right"
 
-<AccessMedicine>:
-    name: "accessmedicine"
-    # BoxLayout:
-    #     orientation: 'vertical'
-    #     BoxLayout:
-    #         orientation: 'horizontal'
-
-    #         Label:
-    #             text: "Name"
-    #         Label:
-    #             text: "Stock"
-    #         Label:
-    #             text: "Price"
-    #         Label:
-    #             text: "Contact"
-    #     RecycleMedicine:
-
+<RV>:
     GridLayout:
+        rows: 3
         cols: 1
         size: root.width, root.height
 
@@ -480,41 +447,15 @@
 
         GridLayout:
             cols: 1
-            RecycleMedicine:
-
-<AccessBed>:
-    name: "accessbed"
-    BoxLayout:
-        orientation: 'vertical'
-        BoxLayout:
-            orientation: 'horizontal'
-
-            Label:
-                text: "Name"
-            Label:
-                text: "Stock"
-            Label:
-                text: "Price"
-            Label:
-                text: "Contact"
-        RecycleEquipment:
-
-<AccessEquipment>:
-    name: "accessequipment"
-    BoxLayout:
-        orientation: 'vertical'
-        BoxLayout:
-            orientation: 'horizontal'
-
-            Label:
-                text: "Type"
-            Label:
-                text: "Stock"
-            Label:
-                text: "Price"
-            Label:
-                text: "Contact"
-        RecycleEquipment:
-
-<AccessBlood>:
-    name: "accessblood"
+            RecycleView:
+                viewclass: 'Label'
+                data: [{'text': str(x)} for x in root.data_items]
+                RecycleGridLayout:
+                    default_size_hint: 1, None
+                    cols: 4
+        GridLayout:
+            cols: 1
+            Button:
+                text: "Back"
+                on_release:
+                    root.changeapps()
