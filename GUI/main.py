@@ -16,10 +16,7 @@ import mysql.connector
 conn = mysql.connector.connect(host="localhost", user="root", password="Covicare123", database='covicare')
 mycur = conn.cursor()
 
-# global variables
 city = ""
-myresult = []
-
 
 # setting the screens
 
@@ -234,19 +231,32 @@ class AccessMenu(Screen):
 
         if self.accesscity.text != "":
             city = self.accesscity.text
-            sm.current = "accessmedicine"
+            mycur.execute("SELECT medicine_name, stock, price, contact FROM MEDICINE WHERE city = %s;", (city,))
+            rows = mycur.fetchall()
+            if rows == []:
+                citynotfound()
+            else:
+                sm.current = "blank"
+                CoviCare().stop()
+                MedicineDisplay().run()
         else:
             invalidcity()
+        
         self.resetcity()
-        CoviCare().stop()
-        MedicineDisplay().run()
 
     def assigncitybe(self):
         global city
 
         if self.accesscity.text != "":
             city = self.accesscity.text
-            sm.current = "accessbed"
+            mycur.execute("SELECT hospital_name, type_of_bed, no_of_beds, contact FROM BED WHERE city = %s;", (city,))
+            rows = mycur.fetchall()
+            if rows == []:
+                citynotfound()
+            else:
+                sm.current = "blank"
+                CoviCare().stop()
+                BedDisplay().run()
         else:
             invalidcity()
 
@@ -257,7 +267,14 @@ class AccessMenu(Screen):
 
         if self.accesscity.text != "":
             city = self.accesscity.text
-            sm.current = "accessequipment"
+            mycur.execute("SELECT equipment_type, stock, price, contact FROM EQUIPMENT WHERE city = %s;", (city,))
+            rows = mycur.fetchall()
+            if rows == []:
+                citynotfound()
+            else:
+                sm.current = "blank"
+                CoviCare().stop()
+                EquipmentDisplay().run()
         else:
             invalidcity()
 
@@ -268,7 +285,14 @@ class AccessMenu(Screen):
 
         if self.accesscity.text != "":
             city = self.accesscity.text
-            sm.current = "accessblood"
+            mycur.execute("SELECT donor_name, blood_type, recovery, contact FROM BLOOD WHERE city = %s;", (city,))
+            rows = mycur.fetchall()
+            if rows == []:
+                citynotfound()
+            else:
+                sm.current = "blank"
+                CoviCare().stop()
+                BloodDisplay().run()
         else:
             invalidcity()
 
@@ -278,27 +302,11 @@ class AccessMenu(Screen):
         self.accesscity.text = ""
 
 
-class AccessMedicine(Screen):
-    pass
-
-
-class AccessBed(Screen):
-    pass
-
-
-class AccessEquipment(Screen):
-    pass
-
-
-class AccessBlood(Screen):
-    pass
-
-
-class RV(GridLayout):
+class AccessMedicine(GridLayout):
     data_items = ListProperty([])
 
     def __init__(self, **kwargs):
-        super(RV, self).__init__(**kwargs)
+        super(AccessMedicine, self).__init__(**kwargs)
         self.get_users()
 
     def get_users(self):
@@ -318,10 +326,95 @@ class MedicineDisplay(App):
     title = "Medicine Access"
 
     def build(self):
-        return RV()
+        return AccessMedicine()
+
+
+class AccessBed(GridLayout):
+    data_items = ListProperty([])
+
+    def __init__(self, **kwargs):
+        super(AccessBed, self).__init__(**kwargs)
+        self.get_users()
+
+    def get_users(self):
+
+        mycur.execute("SELECT hospital_name, type_of_bed, no_of_beds, contact FROM BED WHERE city = %s;", (city,))
+        rows = mycur.fetchall()
+
+        # create data_items
+        for row in rows:
+            for col in row:
+                self.data_items.append(col)
+
+    def changeapps(self):
+        BedDisplay().stop()
+
+class BedDisplay(App):
+    title = "Bed Access"
+
+    def build(self):
+        return AccessBed()
+
+
+class AccessEquipment(GridLayout):
+    data_items = ListProperty([])
+
+    def __init__(self, **kwargs):
+        super(AccessEquipment, self).__init__(**kwargs)
+        self.get_users()
+
+    def get_users(self):
+
+        mycur.execute("SELECT equipment_type, stock, price, contact FROM EQUIPMENT WHERE city = %s;", (city,))
+        rows = mycur.fetchall()
+
+        # create data_items
+        for row in rows:
+            for col in row:
+                self.data_items.append(col)
+
+    def changeapps(self):
+        EquipmentDisplay().stop()
+
+class EquipmentDisplay(App):
+    title = "Equipment Access"
+
+    def build(self):
+        return AccessEquipment()
+
+
+class AccessBlood(GridLayout):
+    data_items = ListProperty([])
+
+    def __init__(self, **kwargs):
+        super(AccessBlood, self).__init__(**kwargs)
+        self.get_users()
+
+    def get_users(self):
+
+        mycur.execute("SELECT donor_name, blood_type, recovery, contact FROM BLOOD WHERE city = %s;", (city,))
+        rows = mycur.fetchall()
+
+        # create data_items
+        for row in rows:
+            for col in row:
+                self.data_items.append(col)
+
+    def changeapps(self):
+        BloodDisplay().stop()
+
+class BloodDisplay(App):
+    title = "Blood Access"
+
+    def build(self):
+        return AccessBlood()
 
 
 class Navigation(Screen):
+    pass
+
+
+class Blank(Screen):
     pass
 
 
@@ -352,6 +445,12 @@ def invalidcity():
     pop.open()
 
 
+def citynotfound():
+    pop = Popup(title='Error', content=Label(text='Sorry! No leads found in this city.', font_size=15), size_hint=(None, None),
+                size=(300, 300))
+    pop.open()
+
+
 # build using kv file
 kv = Builder.load_file("covicare.kv")
 
@@ -371,10 +470,7 @@ sm.add_widget(SupplyBlood(name="supplyblood"))
 
 # access        
 sm.add_widget(AccessMenu(name="accessmenu"))
-sm.add_widget(AccessMedicine(name="accessmedicine"))
-sm.add_widget(AccessBed(name="accessbed"))
-sm.add_widget(AccessEquipment(name="accessequipment"))
-sm.add_widget(AccessBlood(name="accessblood"))
+sm.add_widget(Blank(name = "blank"))
 
 # current screen
 sm.current = "main"

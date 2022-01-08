@@ -2,11 +2,13 @@
 
 # -----------------------Object Properties---------------------------
 <Label>:
-    font_size: 25
+    font_size: 20
 
 <Button>:
     font_size: 30
     background_color: 0.4, 1, 0.8, 1
+    size_hint: (0.5, 0.5)
+    pos: (20, 20)
 
 # --------------------------Main Screen------------------------------
 <MainWindow>:
@@ -373,6 +375,8 @@
 
 #------------------------------------------ACCESS---------------------------------------------
 
+<Blank>:
+    name: "blank"
 
 <AccessMenu>:
     name: "accessmenu"
@@ -427,7 +431,7 @@
                 root.manager.current = "main"
                 root.manager.transition.direction= "right"
 
-<RV>:
+<AccessMedicine>:
     GridLayout:
         rows: 3
         cols: 1
@@ -442,6 +446,106 @@
                 text: "Stock"
             Label:
                 text: "Price"
+            Label:
+                text: "Contact"
+
+        GridLayout:
+            cols: 1
+            RecycleView:
+                viewclass: 'Label'
+                data: [{'text': str(x)} for x in root.data_items]
+                RecycleGridLayout:
+                    default_size_hint: 1, None
+                    cols: 4
+        GridLayout:
+            cols: 1
+            Button:
+                text: "Close"
+                on_release:
+                    root.changeapps()
+
+<AccessBed>:
+    GridLayout:
+        rows: 3
+        cols: 1
+        size: root.width, root.height
+
+        GridLayout:
+            cols: 4
+
+            Label:
+                text: "Hospital Name"
+            Label:
+                text: "Bed Type"
+            Label:
+                text: "Number of Beds"
+            Label:
+                text: "Contact"
+
+        GridLayout:
+            cols: 1
+            RecycleView:
+                viewclass: 'Label'
+                data: [{'text': str(x)} for x in root.data_items]
+                RecycleGridLayout:
+                    default_size_hint: 1, None
+                    cols: 4
+        
+        GridLayout:
+            cols: 1
+            Button:
+                text: "Close"
+                on_release:
+                    root.changeapps()
+
+<AccessEquipment>:
+    GridLayout:
+        rows: 3
+        cols: 1
+        size: root.width, root.height
+
+        GridLayout:
+            cols: 4
+
+            Label:
+                text: "Equipment"
+            Label:
+                text: "Stock"
+            Label:
+                text: "Price"
+            Label:
+                text: "Contact"
+
+        GridLayout:
+            cols: 1
+            RecycleView:
+                viewclass: 'Label'
+                data: [{'text': str(x)} for x in root.data_items]
+                RecycleGridLayout:
+                    default_size_hint: 1, None
+                    cols: 4
+        GridLayout:
+            cols: 1
+            Button:
+                text: "Close"
+                on_release:
+                    root.changeapps()
+
+<AccessBlood>:
+    GridLayout:
+        rows: 3
+        cols: 1
+        size: root.width, root.height
+
+        GridLayout:
+            cols: 4
+
+            Label:
+                text: "Donor Name"
+            Label:
+                text: "Blood Type"
+            Label:
+                text: "Recovery Time"
             Label:
                 text: "Contact"
 
