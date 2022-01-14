@@ -94,12 +94,29 @@ class SupplyMedicine(Screen):
 
         if str(id).isdigit() and name != "" and address != "" and str(stock).isdigit() and (
                 str(price).isdigit() or str(price).isdecimal()) and contact != "":
-            sql = "INSERT INTO MEDICINE VALUES(%s, %s, %s, %s, %s, %s, %s);"
-            val = (id, name, city, address, stock, price, contact)
-            mycur.execute(sql, val)
-            conn.commit()
-            sm.current = "navigation"
-            popupS()
+            mycur.execute("SELECT medicine_id, city FROM MEDICINE WHERE medicine_id = %s;", (id,))
+            rows = mycur.fetchone()
+            if int(rows[0]) == int(id) and rows[1] == city:
+                # Delete
+                if int(stock) == 0:
+                    mycur.execute("DELETE FROM MEDICINE WHERE medicine_id = %s;", (id,))
+                # Update
+                else:
+                    mycur.execute("UPDATE MEDICINE SET stock = %s, price = %s where medicine_id = %s;", (stock, price, id))
+                sm.current = "navigation"
+                conn.commit()
+                updated()
+            else:
+                # Insert
+                if rows != []:
+                    duplicate()
+                else:
+                    sql = "INSERT INTO MEDICINE VALUES(%s, %s, %s, %s, %s, %s, %s);"
+                    val = (id, name, city, address, stock, price, contact)
+                    mycur.execute(sql, val)
+                    conn.commit()
+                    sm.current = "navigation"
+                    popupS()
         else:
             invalid()
 
@@ -133,12 +150,28 @@ class SupplyBed(Screen):
 
         if str(id).isdigit() and name != "" and address != "" and htype != "" and str(
                 count).isdigit() and contact != "":
-            sql = "INSERT INTO BED VALUES(%s, %s, %s, %s, %s, %s, %s);"
-            val = (id, name, city, address, htype, count, contact)
-            mycur.execute(sql, val)
-            conn.commit()
-            sm.current = "navigation"
-            popupS()
+            mycur.execute("SELECT hospital_id, city FROM BED WHERE hospital_id = %s;", (id,))
+            rows = mycur.fetchone()
+            if int(rows[0]) == int(id) and rows[1] == city:
+                # Delete
+                if int(count) == 0:
+                    mycur.execute("DELETE FROM BED WHERE hospital_id = %s;", (id,))
+                # Update
+                else:
+                    mycur.execute("UPDATE BED SET no_of_beds = %s where hospital_id = %s;", (count, id))
+                sm.current = "navigation"
+                conn.commit()
+                updated()
+            else:
+                if rows != []:
+                    duplicate()
+                else:
+                    sql = "INSERT INTO BED VALUES(%s, %s, %s, %s, %s, %s, %s);"
+                    val = (id, name, city, address, htype, count, contact)
+                    mycur.execute(sql, val)
+                    conn.commit()
+                    sm.current = "navigation"
+                    popupS()
         else:
             invalid()
 
@@ -169,12 +202,28 @@ class SupplyEquipment(Screen):
 
         if str(id).isdigit() and etype != "" and str(stock).isdigit() and (
                 str(price).isdigit() or str(price).isdecimal()) and contact != "":
-            sql = "INSERT INTO EQUIPMENT VALUES(%s, %s, %s, %s, %s, %s);"
-            val = (id, etype, city, stock, price, contact)
-            mycur.execute(sql, val)
-            conn.commit()
-            sm.current = "navigation"
-            popupS()
+            mycur.execute("SELECT equipment_id, city FROM EQUIPMENT WHERE equipment_id = %s;", (id,))
+            rows = mycur.fetchone()
+            if int(rows[0]) == int(id) and rows[1] == city:
+                # Delete
+                if int(stock) == 0:
+                    mycur.execute("DELETE FROM EQUIPMENT WHERE equipment_id = %s;", (id,))
+                # Update
+                else:
+                    mycur.execute("UPDATE EQUIPMENT SET stock = %s, price = %s where equipment_id = %s;", (stock, price, id))
+                sm.current = "navigation"
+                conn.commit()
+                updated()
+            else:
+                if rows != []:
+                    duplicate()
+                else:
+                    sql = "INSERT INTO EQUIPMENT VALUES(%s, %s, %s, %s, %s, %s);"
+                    val = (id, etype, city, stock, price, contact)
+                    mycur.execute(sql, val)
+                    conn.commit()
+                    sm.current = "navigation"
+                    popupS()
         else:
             invalid()
 
@@ -429,6 +478,18 @@ class WindowManager(ScreenManager):
 # global functions
 def popupS():
     pop = Popup(title='Success', content=Label(text='Your entry has been recorded.', font_size=15),
+                size_hint=(None, None), size=(300, 300))
+    pop.open()
+
+
+def updated():
+    pop = Popup(title='Success', content=Label(text='Your entry has been updated.', font_size=15),
+                size_hint=(None, None), size=(300, 300))
+    pop.open()
+
+
+def duplicate():
+    pop = Popup(title='Duplicate ID', content=Label(text='That ID already exists. Please try again', font_size=15),
                 size_hint=(None, None), size=(300, 300))
     pop.open()
 
