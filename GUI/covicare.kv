@@ -538,14 +538,12 @@
         size: root.width, root.height
 
         GridLayout:
-            cols: 4
+            cols: 3
 
             Label:
                 text: "Donor Name"
             Label:
                 text: "Blood Type"
-            Label:
-                text: "Recovery Time"
             Label:
                 text: "Contact"
 
@@ -556,7 +554,7 @@
                 data: [{'text': str(x)} for x in root.data_items]
                 RecycleGridLayout:
                     default_size_hint: 1, None
-                    cols: 4
+                    cols: 3
         GridLayout:
             cols: 1
             Button:

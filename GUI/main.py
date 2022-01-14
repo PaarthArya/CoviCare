@@ -285,7 +285,7 @@ class AccessMenu(Screen):
 
         if self.accesscity.text != "":
             city = self.accesscity.text
-            mycur.execute("SELECT donor_name, blood_type, recovery, contact FROM BLOOD WHERE city = %s;", (city,))
+            mycur.execute("SELECT donor_name, blood_type, contact FROM BLOOD WHERE city = %s;", (city,))
             rows = mycur.fetchall()
             if rows == []:
                 citynotfound()
@@ -392,7 +392,7 @@ class AccessBlood(GridLayout):
 
     def get_users(self):
 
-        mycur.execute("SELECT donor_name, blood_type, recovery, contact FROM BLOOD WHERE city = %s;", (city,))
+        mycur.execute("SELECT donor_name, blood_type, contact FROM BLOOD WHERE city = %s;", (city,))
         rows = mycur.fetchall()
 
         # create data_items
