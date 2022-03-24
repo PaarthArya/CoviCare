@@ -92,11 +92,17 @@ class SupplyMedicine(Screen):
         price = self.medprice.text
         contact = self.medcontact.text
 
-        if str(id).isdigit() and name != "" and address != "" and str(stock).isdigit() and (
-                str(price).isdigit() or str(price).isdecimal()) and contact != "":
+        if str(id).isdigit() and name != "" and address != "" and str(stock).isdigit() and (str(price).isdigit() or str(price).isdecimal()) and contact != "":
             mycur.execute("SELECT medicine_id, city FROM MEDICINE WHERE medicine_id = %s;", (id,))
             rows = mycur.fetchone()
-            if int(rows[0]) == int(id) and rows[1] == city:
+            if rows is None:
+                sql = "INSERT INTO MEDICINE VALUES(%s, %s, %s, %s, %s, %s, %s);"
+                val = (id, name, city, address, stock, price, contact)
+                mycur.execute(sql, val)
+                conn.commit()
+                sm.current = "navigation"
+                popupS()
+            elif int(rows[0]) == int(id) and str(rows[1]) == city:
                 # Delete
                 if int(stock) == 0:
                     mycur.execute("DELETE FROM MEDICINE WHERE medicine_id = %s;", (id,))
@@ -152,7 +158,14 @@ class SupplyBed(Screen):
                 count).isdigit() and contact != "":
             mycur.execute("SELECT hospital_id, city FROM BED WHERE hospital_id = %s;", (id,))
             rows = mycur.fetchone()
-            if int(rows[0]) == int(id) and rows[1] == city:
+            if rows is None:
+                sql = "INSERT INTO BED VALUES(%s, %s, %s, %s, %s, %s, %s);"
+                val = (id, name, city, address, htype, count, contact)
+                mycur.execute(sql, val)
+                conn.commit()
+                sm.current = "navigation"
+                popupS()
+            elif int(rows[0]) == int(id) and rows[1] == city:
                 # Delete
                 if int(count) == 0:
                     mycur.execute("DELETE FROM BED WHERE hospital_id = %s;", (id,))
@@ -204,7 +217,14 @@ class SupplyEquipment(Screen):
                 str(price).isdigit() or str(price).isdecimal()) and contact != "":
             mycur.execute("SELECT equipment_id, city FROM EQUIPMENT WHERE equipment_id = %s;", (id,))
             rows = mycur.fetchone()
-            if int(rows[0]) == int(id) and rows[1] == city:
+            if rows is None:
+                sql = "INSERT INTO EQUIPMENT VALUES(%s, %s, %s, %s, %s, %s);"
+                val = (id, etype, city, stock, price, contact)
+                mycur.execute(sql, val)
+                conn.commit()
+                sm.current = "navigation"
+                popupS()
+            elif int(rows[0]) == int(id) and rows[1] == city:
                 # Delete
                 if int(stock) == 0:
                     mycur.execute("DELETE FROM EQUIPMENT WHERE equipment_id = %s;", (id,))
